@@ -3,9 +3,12 @@ package com.formaciondbi.microservicios.examenes.controllers;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -27,7 +30,7 @@ public class ExamenController extends ControllerImpl<Examen, ServicesImpl<Examen
 	
 	@Override
 	@PutMapping("/{id}")
-	public ResponseEntity<?> update(@PathVariable Long id, @RequestBody Examen entity){
+	public ResponseEntity<?> update(@PathVariable Long id,@RequestBody Examen entity){
 		
 		Examen op;
 		
@@ -35,7 +38,6 @@ public class ExamenController extends ControllerImpl<Examen, ServicesImpl<Examen
 			op = this.servicio.findById(id);
 			
 		} catch (Exception e) {
-			System.out.println("------------murio--------------------------------------------------");
 			
 			return ResponseEntity.notFound().build();
 		}	
@@ -60,7 +62,7 @@ public class ExamenController extends ControllerImpl<Examen, ServicesImpl<Examen
 		try {
 			return ResponseEntity.status(HttpStatus.CREATED).body(servicio.save(op));
 		} catch (Exception e) {
-			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("no anda");
+			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("no anda: "+ e.getMessage());
 			
 		}
 	}
@@ -69,4 +71,17 @@ public class ExamenController extends ControllerImpl<Examen, ServicesImpl<Examen
 	public ResponseEntity<?> filtrar(@PathVariable String term){
 		return ResponseEntity.ok(examenServices.findByNombreExamen(term));
 	}
+	
+	@GetMapping("/asignaturas")
+	public ResponseEntity<?> listarAsignaturas(){
+		return ResponseEntity.ok(examenServices.findAllAsignaturas());
+	}
+
+	
+	public ResponseEntity<?> save(Examen entity) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	
 }
