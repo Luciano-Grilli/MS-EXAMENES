@@ -3,6 +3,7 @@ package com.formaciondbi.microservicios.examenes.repository;
 import java.util.List;
 
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.PagingAndSortingRepository;
 
 import com.formaciondbi.microservicios.generics.examenes.Examen;
 import com.formaciondbi.microservicios.generics.repository.Repository;

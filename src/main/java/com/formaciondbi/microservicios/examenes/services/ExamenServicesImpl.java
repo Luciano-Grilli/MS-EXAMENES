@@ -32,7 +32,7 @@ public class ExamenServicesImpl extends ServicesImpl<Examen, Long> implements Ex
 	@Transactional(readOnly = true)
 	public List<Asignatura> findAllAsignaturas() {
 		
-		return asignaturaRepository.findAll();
+		return (List<Asignatura>) asignaturaRepository.findAll();
 	}
 
 }
