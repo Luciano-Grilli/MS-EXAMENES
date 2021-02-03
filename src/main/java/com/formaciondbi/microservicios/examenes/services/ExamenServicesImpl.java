@@ -30,9 +30,9 @@ public class ExamenServicesImpl extends ServicesImpl<Examen, Long> implements Ex
 
 	@Override
 	@Transactional(readOnly = true)
-	public List<Asignatura> findAllAsignaturas() {
+	public Iterable<Asignatura> findAllAsignaturas() {
 		
-		return (List<Asignatura>) asignaturaRepository.findAll();
+		return asignaturaRepository.findAll();
 	}
 
 }

@@ -10,5 +10,5 @@ public interface ExamenServices extends Services<Examen, Long>{
 
 	public List<Examen> findByNombreExamen(String term);
 	
-	public List<Asignatura> findAllAsignaturas();
+	public Iterable<Asignatura> findAllAsignaturas();
 }
