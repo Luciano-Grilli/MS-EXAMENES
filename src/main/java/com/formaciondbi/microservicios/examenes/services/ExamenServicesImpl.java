@@ -35,4 +35,10 @@ public class ExamenServicesImpl extends ServicesImpl<Examen, Long> implements Ex
 		return asignaturaRepository.findAll();
 	}
 
+	@Override
+	@Transactional(readOnly = true)
+	public List<Long> findExamenesIdsConRespuestasByPreguntaIds(List<Long> preguntaIds) {
+		return examenRepository.findExamenesIdsConRespuestasByPreguntaIds(preguntaIds);
+	}
+
 }

@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.formaciondbi.microservicios.examenes.services.ExamenServices;
@@ -25,6 +26,18 @@ public class ExamenController extends ControllerImpl<Examen, ServicesImpl<Examen
 	@Autowired
 	protected ExamenServices examenServices;
 	//this.servicio o examenServices 
+	
+	@GetMapping("/respondidos-por-preguntas")
+	public ResponseEntity<?> findExamenesIdsPorPreguntasIdRespondidas(@RequestParam List<Long> preguntaIds){
+		return ResponseEntity.status(HttpStatus.OK).body(examenServices.findExamenesIdsConRespuestasByPreguntaIds(preguntaIds));
+		/*
+		try {
+			return ResponseEntity.status(HttpStatus.OK).body(examenServices.findExamenesIdsConRespuestasByPreguntaIds(preguntaIds));
+		} catch (Exception e) {
+			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("no anda: "+ e.getMessage());
+			
+		}*/
+	}
 	
 	@Override
 	@PutMapping("/{id}")
