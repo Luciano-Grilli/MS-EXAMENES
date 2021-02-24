@@ -1,7 +1,7 @@
 package com.formaciondbi.microservicios.examenes.controllers;
 
-import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import javax.validation.Valid;
 
@@ -45,19 +45,19 @@ public class ExamenController extends ControllerImpl<Examen, ServicesImpl<Examen
 	@PutMapping("/{id}")
 	public ResponseEntity<?> update(@Valid @PathVariable Long id,@RequestBody Examen entity,BindingResult result){
 		
-		Examen op;
+		Examen examenDb;
 		
 		try {
-			op = this.servicio.findById(id);
+			examenDb = this.servicio.findById(id);
 			
 		} catch (Exception e) {
 			
 			return ResponseEntity.notFound().build();
 		}	
 		
-		op.setNombre(entity.getNombre());;
+		examenDb.setNombre(entity.getNombre());;
 		
-		
+		/*
 		List<Pregunta> eliminadas = new ArrayList<>();
 		
 		op.getPreguntas().forEach(p ->{
@@ -69,11 +69,22 @@ public class ExamenController extends ControllerImpl<Examen, ServicesImpl<Examen
 		eliminadas.forEach(p ->{
 			op.removePregunta(p);
 		});
+		*/
 		
-		op.setPreguntas(entity.getPreguntas());
+		List<Pregunta>eliminadas = examenDb.getPreguntas()
+		.stream()
+		.filter(pdb -> !entity.getPreguntas().contains(pdb))
+		.collect(Collectors.toList());
+		
+		
+		eliminadas.forEach(examenDb::removePregunta);
+		
+		examenDb.setPreguntas(entity.getPreguntas());
+		examenDb.setAsignaturaHija(entity.getAsignaturaHija());
+		examenDb.setAsignaturaPadre(entity.getAsignaturaPadre());
 		
 		try {
-			return ResponseEntity.status(HttpStatus.CREATED).body(servicio.save(op));
+			return ResponseEntity.status(HttpStatus.CREATED).body(servicio.save(examenDb));
 		} catch (Exception e) {
 			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("no anda: "+ e.getMessage());
 			
