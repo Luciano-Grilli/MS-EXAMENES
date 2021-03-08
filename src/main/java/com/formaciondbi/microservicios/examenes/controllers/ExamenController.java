@@ -101,17 +101,6 @@ public class ExamenController extends ControllerImpl<Examen, ServicesImpl<Examen
 		return ResponseEntity.ok(examenServices.findAllAsignaturas());
 	}
 
-	
-	public ResponseEntity<?> save(Examen entity) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public ResponseEntity<?> update(Long id, Examen entity) {
-		
-		return null;
-	}
 
 	
 }
